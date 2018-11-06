@@ -7,7 +7,7 @@ import sys
 
 
 client = discord.Client()
-YOUR_TOKEN = "NDg2MTQ2MDQ0Mzg4NzA0MjY4.Dr2yFg.QRFCXS3Al29YJuzd3o1DlLJRQSg"
+YOUR_TOKEN = 'YourTokenhere'
 
 now = datetime.datetime.now()
 times = datetime.time(now.hour, now.minute, now.second)
