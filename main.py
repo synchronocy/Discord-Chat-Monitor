@@ -4,10 +4,10 @@ import datetime
 import os
 import uuid
 import sys
-
+import requests
 
 client = discord.Client()
-YOUR_TOKEN = "yourtokenhere"
+YOUR_TOKEN = "Yourtokenhere"
 
 now = datetime.datetime.now()
 times = datetime.time(now.hour, now.minute, now.second)
@@ -15,19 +15,21 @@ times = datetime.time(now.hour, now.minute, now.second)
 # Post
 @client.event
 async def on_ready():
+    now = datetime.datetime.now()
     print('Logged in as')
     print('User: '+str(client.user.name)+'\n'+'UserID: '+str(client.user.id)+'\n'+'Email: '+str(client.email)+'\n'+'Member of:')
     for x in client.servers:
         print('( '+str(x.id)+' ) '+str(x))
     print('\nDate: '+str(now.day)+'-'+str(now.month)+'-'+str(now.year))
     print('------------')
-    now = datetime.datetime.now()
     date = str(now.day)+'-'+str(now.month)+'-'+str(now.year)
     times = datetime.time(now.hour, now.minute, now.second)
     prefix = '['+str(times)+"] ( "+str(message.server)+' ) ('+str(message.channel)+" ) "+str(message.author)
     path = 'logs/'+client.user.id+'/'+client.user.name
     print(prefix)
     userdir = 'logs/'+str(client.user.id)+'/'
+    if not os.path.isdir(userdir):
+        os.makedirs(userdir)
     def create():
         with open(userdir+'DMS'+date+'.txt','a') as a:
             with open(userdir+date+'.txt','a') as b:
@@ -52,17 +54,15 @@ async def on_message(message):
     if mattach:
         for x in mattach:
             print('File Upload Detected!\n'+prefix+' Uploaded: '+x.get('url'))
+            response = requests.get(x.get('url'))
+            if response.status_code == 200:
+                with open("logs/"+client.user.id+'/files/'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
+                    f.write(response.content)
             with open(userdir+'Uploaded'+date+'.txt','a') as handle:
                 try:
-                    handle.write(prefix+' : '+x.get('url'))
+                    handle.write(prefix+' : '+x.get('url')+'\n')
                 except Exception:
                     return ""
-    '''if 'Direct' or 'None' in str(message.channel):
-        with open(userdir+date+'.txt','a') as handle:
-            try:
-                handle.write(prefix+': '+str(message.content))
-            except Exception:
-                return ""'''# broken need to fix this function
     with open(userdir+date+'.txt','a') as handle:
         try:
             print(prefix+': '+str(message.content))
