@@ -24,9 +24,7 @@ async def on_ready():
     print('------------')
     date = str(now.day)+'-'+str(now.month)+'-'+str(now.year)
     times = datetime.time(now.hour, now.minute, now.second)
-    prefix = '['+str(times)+"] ( "+str(message.server)+' ) ('+str(message.channel)+" ) "+str(message.author)
     path = 'logs/'+client.user.id+'/'+client.user.name
-    print(prefix)
     userdir = 'logs/'+str(client.user.id)+'/'
     if not os.path.isdir(userdir):
         os.makedirs(userdir)
