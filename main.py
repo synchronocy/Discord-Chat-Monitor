@@ -30,7 +30,8 @@ async def on_ready():
     print('\nDate: '+str(now.day)+'-'+str(now.month)+'-'+str(now.year))
     print('------------')
     if not os.path.isdir('./logs/'+str(client.user.id)+'/'):
-        os.makedirs('./logs/'+str(client.user.id)+'/files')
+        os.makedirs('./logs/'+str(client.user.id)+'/files/servers')
+        os.makedirs('./logs/'+str(client.user.id)+'/files/users')
     def create():
         if os.path.exists(userdir+str(client.user.name)+'-UserInfo-'+date+'.txt'):
             os.remove(userdir+str(client.user.name)+'-UserInfo-'+date+'.txt')
@@ -57,24 +58,24 @@ async def on_message(message):
             response = requests.get(x.get('url'))
             if response.status_code == 200:
                 if 'None' in str(message.server):
-                    if not os.path.isdir('./logs/'+str(client.user.id)+'/files/'+str(message.channel)[20:]):
+                    if not os.path.isdir('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel)[20:]):
                         try:
-                            os.mkdir('./logs/'+str(client.user.id)+'/files/'+str(message.channel)[20:])
-                            with open('./logs/'+str(client.user.id)+'/files/'+str(message.channel)[20:]+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
+                            os.mkdir('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel)[20:])
+                            with open('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel)[20:]+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
                                 f.write(response.content)
                         except Exception:
-                            os.mkdir('./logs/'+str(client.user.id)+'/files/'+str(message.channel.id))
-                            with open('./logs/'+str(client.user.id)+'/files/'+str(message.channel.id)+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
+                            os.mkdir('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel.id))
+                            with open('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel.id)+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
                                 f.write(response.content)                            
                 else:
-                    if not os.path.isdir('./logs/'+str(client.user.id)+'/files/'+str(message.server)+'/'):
+                    if not os.path.isdir('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server)+'/'):
                         try:
-                            os.mkdir('./logs/'+str(client.user.id)+'/files/'+str(message.server)+'/')
-                            with open('./logs/'+str(client.user.id)+'/files/'+str(message.server)+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
+                            os.mkdir('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server)+'/')
+                            with open('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server)+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
                                 f.write(response.content)
                         except Exception:
-                            os.mkdir('./logs/'+str(client.user.id)+'/files/'+str(message.server.id)+'/')
-                            with open('./logs/'+str(client.user.id)+'/files/'+str(message.server.id)+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
+                            os.mkdir('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server.id)+'/')
+                            with open('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server.id)+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
                                 f.write(response.content)
                     
             with open(userdir+'Uploaded'+date+'.txt','a') as handle:
