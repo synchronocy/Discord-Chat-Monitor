@@ -7,7 +7,7 @@ import sys
 import requests
 
 client = discord.Client()
-YOUR_TOKEN = "Yourtokenhere"
+YOUR_TOKEN = "YourTokenHere"
 
 now = datetime.datetime.now()
 times = datetime.time(now.hour, now.minute, now.second)
@@ -58,24 +58,31 @@ async def on_message(message):
             response = requests.get(x.get('url'))
             if response.status_code == 200:
                 if 'None' in str(message.server):
-                    if not os.path.isdir('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel)[20:]):
+                    if os.path.isdir('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel)[20:]):
                         try:
-                            os.mkdir('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel)[20:])
                             with open('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel)[20:]+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
                                 f.write(response.content)
                         except Exception:
                             os.mkdir('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel.id))
                             with open('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel.id)+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
-                                f.write(response.content)                            
+                                f.write(response.content)
+                    else:
+                      os.mkdir('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel)[20:])
+                      with open('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel)[20:]+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
+                                f.write(response.content)
+                      
                 else:
-                    if not os.path.isdir('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server)+'/'):
+                    if os.path.isdir('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server)+'/'):
                         try:
-                            os.mkdir('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server)+'/')
                             with open('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server)+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
                                 f.write(response.content)
                         except Exception:
                             os.mkdir('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server.id)+'/')
                             with open('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server.id)+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
+                                f.write(response.content)
+                    else:
+                      os.mkdir('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server)+'/')
+                      with open('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server)+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
                                 f.write(response.content)
                     
             with open(userdir+'Uploaded'+date+'.txt','a') as handle:
