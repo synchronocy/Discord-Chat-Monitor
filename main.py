@@ -47,6 +47,8 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    await asyncio.sleep(5)
+    await client.wait_until_ready()
     mattach = message.attachments
     now = datetime.datetime.now()
     date = str(now.day)+'-'+str(now.month)+'-'+str(now.year)
