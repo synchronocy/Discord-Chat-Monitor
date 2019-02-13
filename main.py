@@ -1,3 +1,9 @@
+#!usr/bin/env python3
+
+# Date: 13-02-19, Feb ~ 13th 2019 | Synchronocy
+# Project: Discord Chat Logger
+# "No I don't remember saying that!"
+
 import discord
 import asyncio
 import datetime
@@ -12,11 +18,6 @@ YOUR_TOKEN = "YourTokenHere"
 now = datetime.datetime.now()
 times = datetime.time(now.hour, now.minute, now.second)
 
-'''if not os.path.isdir('./logs'):
-    os.makedirs('./logs')
-
-''' 
-# Post
 @client.event
 async def on_ready():
     now = datetime.datetime.now()
