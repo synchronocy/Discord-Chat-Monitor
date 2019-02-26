@@ -39,7 +39,7 @@ Sidenote: To log bots; remove bot=False ( useful as just saying ;))
 ### 1.) clear text chats can be stored. ["Once a message or image has been deleted, it is gone from our servers and we are unable to verify it to take action."](https://www.reddit.com/r/discordapp/comments/aukk3p/psa_deleted_messages_are_instantly_deleted_from/) also see [this](https://dotesports.com/culture/news/report-fbi-investigating-discord-for-rise-in-cyber-crime) " but we can't do anything if they're deleted, sorry fbi ¯\_(ツ)_/¯"
 
 
-### 2.) Discord's cache is a useful in saving bandwidth but it also can be abused, very effective if retrieving images from users if it were to be used for malicious intent.
+### 2.) Discord's cache is a useful in saving bandwidth but it also can be abused, very effective if retrieving images from users if it were to be used for malicious intent. [Video](https://www.youtube.com/watch?v=utGummqR9B0)
 
 ### 3.) Discord's Privacy/Data Retention Policy.
 
