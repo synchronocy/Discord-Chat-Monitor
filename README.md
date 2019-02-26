@@ -47,4 +47,4 @@ Sidenote: To log using a bot token; remove `bot=False` (Useful as just saying ;)
 
 
 
-Not implicitly aimed at discord. all clients suck - it just so happens that this one sucks more.
+Not implicitly aimed at Discord. All clients suck - it just so happens that this one sucks more.
