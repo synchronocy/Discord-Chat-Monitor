@@ -1,9 +1,16 @@
 #!usr/bin/env python3
 
-# Date: 13-02-19, Feb ~ 13th 2019 | Synchronocy
-# Project: Discord Chat Logger
+# Date: 02-26-18, Feb ~ 26th 2019 | Synchronocy
+# Project: DIscord Chat Monitor
 # "No I don't remember saying that!"
 
+currentissues = '''
+1.) Some DB code won't input to the database.
+2.) Not using any input validation, please use V1 this version is considered vuln to sqli.
+3.) Messy code, need to follow the docco more.
+4.) if you don't have an existing database without the required tables it will not work.
+5.) possible emoji(none utf-8) characters may corrupt/malform the query
+'''
 import discord
 import asyncio
 import datetime
@@ -11,13 +18,18 @@ import os
 import uuid
 import sys
 import requests
+import sqlite3
 
+print('Connecting to local database.')
+connection = sqlite3.connect('./logs.db') # and yes I'll update it so you'll have all required tables and columns. just not right now.
+cursor = connection.cursor()
 client = discord.Client()
-YOUR_TOKEN = "YourTokenHere"
+YOUR_TOKEN = "YourTokenHere."
 
 now = datetime.datetime.now()
 times = datetime.time(now.hour, now.minute, now.second)
-
+print("\nLogging in using provided token.")
+# Post
 @client.event
 async def on_ready():
     now = datetime.datetime.now()
@@ -30,82 +42,41 @@ async def on_ready():
         print('( '+str(x.id)+' ) '+str(x))
     print('\nDate: '+str(now.day)+'-'+str(now.month)+'-'+str(now.year))
     print('------------')
-    if not os.path.isdir('./logs/'+str(client.user.id)+'/'):
-        os.makedirs('./logs/'+str(client.user.id)+'/files/servers')
-        os.makedirs('./logs/'+str(client.user.id)+'/files/users')
-    def create():
-        if os.path.exists(userdir+str(client.user.name)+'-UserInfo-'+date+'.txt'):
-            os.remove(userdir+str(client.user.name)+'-UserInfo-'+date+'.txt')
-        with open(userdir+str(client.user.name)+'-UserInfo-'+date+'.txt','a') as a:
-            a.write('User: '+str(client.user.name)+'\n'+'UserID: '+str(client.user.id)+'\n'+'Email: '+str(client.email)+'\n'+'Date: '+str(now.day)+'/'+str(now.month)+'/'+str(now.year)+'\n'+'Member of:\n')
-            print('Done!')
-            for x in client.servers:
-                try:
-                    a.write('( '+str(x.id)+' ) '+str(x)+'\n')
-                except Exception:
-                    print('Error Unable to write server to file.')
-    create()
-
+    connection.commit()
+    
+    
 @client.event
-async def on_message(message):
-    await asyncio.sleep(5)
-    await client.wait_until_ready()
-    mattach = message.attachments
+async def on_message(m):
+    mattach = m.attachments
     now = datetime.datetime.now()
     date = str(now.day)+'-'+str(now.month)+'-'+str(now.year)
     times = datetime.time(now.hour, now.minute, now.second)
-    prefix = '['+str(times)+"] ( "+str(message.server)+' ) ( '+str(message.channel)+" ) "+str(message.author)
-    userdir = './logs/'+str(client.user.id)+'/'
+    prefix = '['+str(times)+"] ( "+str(m.server)+' ) ( '+str(m.channel)+" ) "+str(m.author)
     if mattach:
         for x in mattach:
-            response = requests.get(x.get('url'))
-            if response.status_code == 200:
-                if 'None' in str(message.server):
-                    if os.path.isdir('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel)[20:]):
-                        try:
-                            with open('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel)[20:]+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
-                                f.write(response.content)
-                        except Exception:
-                            os.mkdir('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel.id))
-                            with open('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel.id)+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
-                                f.write(response.content)
-                    else:
-                      os.mkdir('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel)[20:])
-                      with open('./logs/'+str(client.user.id)+'/files/users/'+str(message.channel)[20:]+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
-                                f.write(response.content)
-                      
-                else:
-                    if os.path.isdir('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server)+'/'):
-                        try:
-                            with open('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server)+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
-                                f.write(response.content)
-                        except Exception:
-                            os.mkdir('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server.id)+'/')
-                            with open('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server.id)+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
-                                f.write(response.content)
-                    else:
-                      os.mkdir('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server)+'/')
-                      with open('./logs/'+str(client.user.id)+'/files/servers/'+str(message.server)+'/'+date+'-'+str(uuid.uuid4())+'.'+x.get('url')[len(x.get('url'))-3:], 'wb') as f:
-                                f.write(response.content)
-                    
-            with open(userdir+'Uploaded'+date+'.txt','a') as handle:
-                try:
-                    print('File Upload Detected!\n'+prefix+' Uploaded: '+x.get('url'))
-                    handle.write(prefix+' : '+x.get('url')+'\n')
-                except Exception:
-                    return ""
-    if 'None' in str(message.server):
-        with open(userdir+str(client.user.name)+'-DMS'+date+'.txt','a') as dms:
-            try:
-                print(prefix+': '+str(message.content)+'\n')
-                dms.write(prefix+': '+str(message.content)+'\n')
-            except Exception:
-                return ""
+            format_str = '''INSERT INTO uploads (timestamp, user, userid, link) VALUES ("{timestamp}", "{user}", "{userid}","{link}");'''
+            sql_command = format_str.format(timestamp=times,user=str(m.author),userid=str(m.author.id),link=x.get('url'))
+            cursor.execute(sql_command)
+            connection.commit()
+    if 'Direct' in str(m.channel):
+        format_str = '''INSERT INTO dm (date, timestamp, user, message) VALUES ("{date}", "{timestamp}", "{user}","{message}");'''
+        sql_command = format_str.format(date=date, timestamp=times,user=str(m.author),message=str(m.content))
+        print(prefix+': '+str(m.content))
+        cursor.execute(sql_command)
+        connection.commit()
     else:
-        with open(userdir+str(client.user.name)+'-'+date+'.txt','a') as handle:
-            try:
-                print(prefix+': '+str(message.content))
-                handle.write(prefix+': '+str(message.content)+'\n')
-            except Exception:
-                return ""
+        format_str = '''INSERT INTO servers (date, timestamp, servername, channel, user, message) VALUES ("{date}", "{timestamp}","{servername}","{channel}", "{user}","{message}");'''
+        sql_command = format_str.format(date=date, timestamp=times, servername=str(m.server),channel=str(m.channel), user=str(m.author),message=str(m.content))
+        print(prefix+': '+str(m.content))
+        cursor.execute(sql_command)
+        connection.commit()
+        
+'''@client.event
+async def on_server_join(server):
+    print('User has joined: '+str(server))
+    format_str = ''INSERT INTO servers (serverid, servername) VALUES ("{serverid}", "{servername}");''
+    sql_command = format_str.format(serverid=str(server.id),servername=str(server))
+    cursor.execute(sql_command)
+    connection.commit()
+'''
 client.run(YOUR_TOKEN, bot=False)
