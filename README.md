@@ -18,9 +18,8 @@ I wouldn't put anything on discord that I wouldn't put on the back of a post-it 
   
   [-] [SimpleDiscordCrypt link](https://gitlab.com/An0/SimpleDiscordCrypt) [-] 
   
-  [-] DiscordCrypt [-]
-  	
-	[=] __may attempt to include support for these plugins to intercept/capture the key exchange. but hey I need to understand cryptography better before that.__ [=]
+  [-] DiscordCrypt [-] (  __may attempt to include support for these plugins to intercept/capture the key exchange. but hey I need to understand cryptography better before that.__ )
+  
   
 [+] Use another client [+]
   
