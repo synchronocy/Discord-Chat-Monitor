@@ -16,7 +16,7 @@ Sidenote: To log bots; remove bot=False ( useful as just saying ;))
 
 [+] Use Encryption [+]
   
-  	[-] [SimpleDiscordCrypt link](https://gitlab.com/An0/SimpleDiscordCrypt) [-] 
+  	[-] https://gitlab.com/An0/SimpleDiscordCrypt [-] 
   
   	[-] DiscordCrypt [-] (  __may attempt to include support for these plugins to intercept/capture the key exchange. but hey I need to understand cryptography better before that.__ )
   
