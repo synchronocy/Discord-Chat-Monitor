@@ -4,11 +4,11 @@ As far as i'm concerned, discord should not be trusted as far as security(pfs) g
 
 I wouldn't put anything on discord that I wouldn't put on the back of a post-it note.
 
-# Sole purpose of logging all chat messages(server), uploads and private chats on the user.
+Sole purpose of logging all chat messages(server), uploads and private chats on the user.
 
-## Not perfect; you'll need a token in order to log.
+Not perfect; you'll need a token in order to log.
 
-### Sidenote: To log bots; remove bot=False ( useful as just saying ;))
+Sidenote: To log bots; remove bot=False ( useful as just saying ;))
 
 
 
