@@ -1,6 +1,6 @@
 # Discord-Chat-Monitor
 
-As far as i'm concerned, discord should not be trusted as far as security(pfs) goes. 
+As far as i'm concerned, discord should not be trusted as far as security (pfs) goes. 
 
 I wouldn't put anything on discord that I wouldn't put on the back of a post-it note.
 
@@ -8,7 +8,7 @@ Sole purpose of logging all chat messages(server), uploads and private chats on 
 
 Not perfect; you'll need a token in order to log.
 
-Sidenote: To log bots; remove bot=False ( useful as just saying ;))
+Sidenote: To log using a bot token; remove `bot=False` (Useful as just saying ;))
 
 
 
@@ -25,13 +25,13 @@ Sidenote: To log bots; remove bot=False ( useful as just saying ;))
   
   	[-] Matrix.org (riot.im) [-]
   
-  	[-] XMPP ( Pidgin with otr ) [-]
+  	[-] XMPP (Pidgin with otr) [-]
   
-  	[-] Mumble ( yes I went there ) [-]
+  	[-] Mumble (yes I went there) [-]
   
   	[-] IRC [-]
   	
-		[=] and yes irc is still clear text but nonetheless - discord uuh.... [=]
+		[=] And yes irc is still clear text but nonetheless - discord uuh.... [=]
 	
   
 [+] Other points [+]
@@ -47,4 +47,4 @@ Sidenote: To log bots; remove bot=False ( useful as just saying ;))
 
 
 
-not implicitly aimed at discord. all clients suck - it just so happens that this one sucks more.
+Not implicitly aimed at discord. all clients suck - it just so happens that this one sucks more.
